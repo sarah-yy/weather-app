@@ -25,7 +25,7 @@ const FormOverlay: React.FC = () => {
       <button className="fixed top-[1.5rem] right-[2rem]" onClick={handleToggleTheme}>
         Change Theme
       </button>
-      <div className="w-full h-full flex items-center flex-col gap-6 justify-center bg-white/70 dark:bg-slate-900/80">
+      <div className="w-full h-full flex flex-col pt-[12.5rem] gap-6 bg-white/70 dark:bg-slate-900/80">
         <ThemedText component="h1" className="text-5xl font-semibold">
           Weather App
         </ThemedText>
@@ -34,19 +34,22 @@ const FormOverlay: React.FC = () => {
           Select a country and city to view the weather conditions.
         </ThemedText>
 
-        <input
-          className={clsx(
-            "text-slate-800",
-            "dark:text-white",
-            "text-2xl",
-            {
-              "light-input-border": theme === Theme.Light,
-              "dark-input-border": theme === Theme.Dark,
-            },
-            "py-2",
-          )}
-          type="text"
-        />
+        <div className="flex justify-center mt-6">
+          <input
+            className={clsx(
+              "text-slate-800",
+              "dark:text-white",
+              "text-2xl",
+              {
+                "light-input-border": theme === Theme.Light,
+                "dark-input-border": theme === Theme.Dark,
+              },
+              "py-2",
+            )}
+            type="text"
+            placeholder="Select country and city"
+          />
+        </div>
       </div>
     </div>
   );
