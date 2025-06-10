@@ -1,5 +1,5 @@
 import { type FunctionComponent, type PropsWithChildren, createContext, useEffect, useState } from "react";
-import { Theme, type ThemeValue, localStorageKeys } from "../../constants/app";
+import { Theme, type ThemeValue, localStorageKeys } from "../../constants";
 
 interface ThemeProps {
   handleToggleTheme: () => void;
