@@ -1,13 +1,50 @@
 import clsx from "clsx";
-import React from "react";
-import { ThemedText } from "../../components";
-import { Theme } from "../../constants";
+import { ChangeEvent, FunctionComponent, Suspense, useMemo, useState } from "react";
+import { HistoryIcon, MoonIcon, SunIcon } from "../../assets";
+import { IconButton, ThemedText } from "../../components";
+import { CountryInfo, Theme } from "../../constants";
 import DarkOverlayBackground from "../../assets/backgrounds/DarkOverlayBackground.jpg";
 import LightOverlayBackground from "../../assets/backgrounds/LightOverlayBackground.jpg";
-import { useThemeContext } from "../../hooks";
+import { useCountriesContext, useDebounce, useThemeContext } from "../../hooks";
 
-const FormOverlay: React.FC = () => {
+import { SelectDropdown } from "./components";
+
+const FormOverlay: FunctionComponent = () => {
+  const { countryInfoMap } = useCountriesContext();
   const { handleToggleTheme, theme } = useThemeContext();
+  const [input, setInput] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string | undefined>();
+  const [selectedCountry, setSelectedCountry] = useState<string | undefined>();
+
+  const countriesList = useMemo(() => {
+    const countriesList = Object.values(countryInfoMap);
+    if (!searchTerm) return countriesList;
+    return countriesList.filter((country: CountryInfo) => {
+      return country.name.toLowerCase().includes(searchTerm);
+    });
+  }, [countryInfoMap, searchTerm]);
+
+  const handleCountrySelect = (country: string) => setSelectedCountry(country);
+  const handleClearCountry = () => setSelectedCountry(undefined);
+
+  const handleClose = () => {
+    setOpen(false);
+    handleClearCountry();
+  };
+
+  const handleOpen = () => setOpen(true);
+
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const input = e.currentTarget.value;
+    setInput(input);
+    handleSetSearchTerm(input);
+  };
+
+  const handleSetSearchTerm = useDebounce((input: string) => {
+    setSearchTerm(input.length === 0 ? undefined : input.toLowerCase());
+  }, 200);
+
   return (
     <div
       className={clsx(
@@ -22,10 +59,11 @@ const FormOverlay: React.FC = () => {
         backgroundImage: `url(${theme === Theme.Dark ? DarkOverlayBackground : LightOverlayBackground})`,
       }}
     >
-      <button className="fixed top-[1.5rem] right-[2rem]" onClick={handleToggleTheme}>
-        Change Theme
-      </button>
-      <div className="w-full h-full flex flex-col pt-[12.5rem] gap-6 bg-white/70 dark:bg-slate-900/80">
+      <IconButton className="fixed top-[1.5rem] right-[2rem]" onClick={handleToggleTheme}>
+        {theme === Theme.Dark ? <SunIcon /> : <MoonIcon />}
+      </IconButton>
+
+      <div className="w-full h-full flex flex-col pt-[12.5rem] gap-6 bg-white/80 dark:bg-slate-900/80">
         <ThemedText component="h1" className="text-5xl font-semibold">
           Weather App
         </ThemedText>
@@ -34,21 +72,50 @@ const FormOverlay: React.FC = () => {
           Select a country and city to view the weather conditions.
         </ThemedText>
 
-        <div className="flex justify-center mt-6">
-          <input
+        <div className="max-w-[30rem] mx-auto my-0 w-full">
+          <div
             className={clsx(
-              "text-slate-800",
-              "dark:text-white",
-              "text-2xl",
+              "flex",
+              "justify-center",
+              "items-center",
+              "mt-6",
               {
                 "light-input-border": theme === Theme.Light,
                 "dark-input-border": theme === Theme.Dark,
+                "error-input-border": countriesList.length === 0,
               },
-              "py-2",
             )}
-            type="text"
-            placeholder="Select country and city"
-          />
+          >
+            <input
+              className={clsx(
+                "text-slate-800",
+                "dark:text-white",
+                "text-2xl",
+                "py-2",
+                "w-full"
+              )}
+              type="text"
+              placeholder="Select country and city"
+              onFocus={handleOpen}
+              value={input}
+              onChange={handleChangeInput}
+            />
+            
+            <IconButton className="w-10 h-10">
+              <HistoryIcon className="w-6 h-6" />
+            </IconButton>
+          </div>
+
+          <Suspense>
+            <SelectDropdown
+              countriesList={countriesList}
+              handleClose={handleClose}
+              handleClearCountry={handleClearCountry}
+              handleCountrySelect={handleCountrySelect}
+              open={open}
+              selectedCountry={selectedCountry}
+            />
+          </Suspense>
         </div>
       </div>
     </div>
