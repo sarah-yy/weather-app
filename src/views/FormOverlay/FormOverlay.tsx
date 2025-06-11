@@ -31,6 +31,8 @@ const FormOverlay: FunctionComponent = () => {
   const handleClose = () => {
     setOpen(false);
     handleClearCountry();
+    setSearchTerm(undefined);
+    setInput("");
   };
 
   const handleOpen = () => setOpen(true);
@@ -63,7 +65,7 @@ const FormOverlay: FunctionComponent = () => {
         {theme === Theme.Dark ? <SunIcon /> : <MoonIcon />}
       </IconButton>
 
-      <div className="w-full h-full flex flex-col pt-[12.5rem] gap-6 bg-white/80 dark:bg-slate-900/80">
+      <div className="w-full h-full flex flex-col pt-[12.5rem] gap-6 bg-white/70 dark:bg-slate-900/80">
         <ThemedText component="h1" className="text-5xl font-semibold">
           Weather App
         </ThemedText>
@@ -92,7 +94,8 @@ const FormOverlay: FunctionComponent = () => {
                 "dark:text-white",
                 "text-2xl",
                 "py-2",
-                "w-full"
+                "w-full",
+                { "error-text": countriesList.length === 0 },
               )}
               type="text"
               placeholder="Select country and city"
@@ -114,6 +117,7 @@ const FormOverlay: FunctionComponent = () => {
               handleCountrySelect={handleCountrySelect}
               open={open}
               selectedCountry={selectedCountry}
+              searchInput={input}
             />
           </Suspense>
         </div>

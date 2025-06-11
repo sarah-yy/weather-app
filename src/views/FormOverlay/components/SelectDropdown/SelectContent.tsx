@@ -9,14 +9,15 @@ interface Props {
   handleCountrySelect: (country: string) => void;
   selectedCountry?: string;
   countriesList: CountryInfo[];
+  searchInput: string;
 }
 
 const SelectContent: React.FC<Props> = (props: Props) => {
-  const { countriesList, handleClearCountry, handleCountrySelect, selectedCountry } = props;
+  const { countriesList, handleClearCountry, handleCountrySelect, selectedCountry, searchInput } = props;
 
   return (
     <Fragment>
-      <CountrySelect handleCountrySelect={handleCountrySelect} countriesList={countriesList} />
+      <CountrySelect handleCountrySelect={handleCountrySelect} countriesList={countriesList} searchInput={searchInput} />
       <Suspense>
         <CitiesSelect handleClearCountry={handleClearCountry} selectedCountry={selectedCountry}  />
       </Suspense>

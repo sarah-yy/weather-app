@@ -11,10 +11,11 @@ interface Props {
   countriesList: CountryInfo[];
   open: boolean;
   handleClose: () => void;
+  searchInput: string;
 }
 
 const SelectDropdown: React.FC<Props> = (props: Props) => {
-  const { countriesList, handleClearCountry, handleCountrySelect, selectedCountry, open, handleClose } = props;
+  const { countriesList, handleClearCountry, handleCountrySelect, selectedCountry, open, handleClose, searchInput } = props;
 
   return (
     <Fragment>
@@ -35,6 +36,7 @@ const SelectDropdown: React.FC<Props> = (props: Props) => {
                 handleClearCountry={handleClearCountry}
                 handleCountrySelect={handleCountrySelect}
                 selectedCountry={selectedCountry}
+                searchInput={searchInput}
               />
             </Card>
           )}

@@ -1,17 +1,47 @@
 import clsx from "clsx";
 import { FunctionComponent } from "react";
-import { ContainedButton } from "../../../../../../components";
-import { CountryInfo } from "../../../../../../constants";
+import NoResultsDark from "../../../../../../assets/graphics/NoResultsDark.png";
+import NoResultsLight from "../../../../../../assets/graphics/NoResultsLight.png";
+import { ContainedButton, ThemedText } from "../../../../../../components";
+import { CountryInfo, Theme } from "../../../../../../constants";
 import { useThemeContext } from "../../../../../../hooks";
 
 interface Props {
   handleCountrySelect: (country: string) => void;
+  searchInput: string;
   countriesList: CountryInfo[];
 }
 
 const CountrySelect: FunctionComponent<Props> = (props: Props) => {
-  const { handleCountrySelect, countriesList } = props;
+  const { handleCountrySelect, countriesList, searchInput } = props;
   const { theme } = useThemeContext();
+
+  if (countriesList.length === 0) {
+    return (
+      <div
+        className={clsx(
+          "flex",
+          "justify-center",
+          "items-center",
+          "max-h-[16rem]",
+          "min-h-[16rem]",
+        )}
+      >
+        <div>
+          <img
+            src={theme === Theme.Dark ? NoResultsDark : NoResultsLight}
+            className="w-[3rem] h-[3rem] block my-0 mx-auto"
+          />
+          <ThemedText
+            component="p"
+            className="max-w-[18.75rem] mt-3"
+          >
+            No results for &quot;{searchInput}&quot; found. Please try another input.
+          </ThemedText>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
