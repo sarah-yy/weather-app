@@ -4,14 +4,16 @@ import "./styles/component.css";
 import "./styles/custom.css";
 import "./styles/index.css";
 import App from "./App.tsx";
-import { CountriesProvider, ThemeProvider } from "./provider";
+import { CountriesProvider, WeatherProvider, ThemeProvider } from "./provider";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <CountriesProvider>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <WeatherProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </WeatherProvider>
     </CountriesProvider>
   </StrictMode>,
 );

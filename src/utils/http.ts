@@ -61,3 +61,18 @@ export class HTTPManager {
     });
   }
 }
+
+type RequestValue = string | boolean | number;
+type BaseRequest = SimpleMap<RequestValue>;
+
+export const getReqUrl = (domain: string, path: string, req: BaseRequest = {}): string => {
+  let queryUrl = `${domain}/${path}`;
+  if (Object.keys(req).length > 0) {
+    const queryStrArr = Object.entries(req).map(([key, value]: [string, RequestValue]) => {
+      const encodedValue = typeof value === "string" ? encodeURIComponent(value) : value;
+      return `${key}=${encodedValue}`;
+    });
+    queryUrl = `${queryUrl}?${queryStrArr.join("&")}`;
+  }
+  return queryUrl;
+};

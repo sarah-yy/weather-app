@@ -8,6 +8,10 @@ interface CountriesProps {
 
 export const CountriesContext = createContext<CountriesProps | undefined>(undefined);
 
+const overrideCities: SimpleMap<string[]> = {
+  Singapore: ["Singapore"],
+};
+
 const CountriesProvider: FunctionComponent<PropsWithChildren> = (props: PropsWithChildren) => {
   const { children } = props;
   const [countryInfoMap, setCountryInfoMap] = useState<CountryInfoMap>({});
@@ -24,7 +28,10 @@ const CountriesProvider: FunctionComponent<PropsWithChildren> = (props: PropsWit
         const countriesInfo: SimpleMap<CountryInfo> = {};
         citiesAll.forEach((citiesObj: CitiesByCountryIndivJson) => {
           const { country, cities } = citiesObj;
-          countriesInfo[country] = { cities, name: country };
+          countriesInfo[country] = {
+            cities: overrideCities[country] ?? cities,
+            name: country,
+          };
         });
         countryFlagsAll.forEach((flagObj: CountryFlagIndiv) => {
           const { flag, iso2, iso3, name } = flagObj;

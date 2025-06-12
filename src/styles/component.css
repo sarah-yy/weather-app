@@ -7,7 +7,7 @@
   color: var(--color-white);
 }
 .card-light {
-  background-color: var(--color-white);
+  background-color: var(--color-slate-100);
   color: var(--color-slate-800);
 }
 .contained-btn-base {
@@ -34,7 +34,7 @@
 .contained-btn-base::before {
   transform: translateX(calc(-100% - 0.75rem));
 }
-.contained-btn-base:hover::before {
+.contained-btn-base:hover::before, .contained-btn-base.selected::before {
   transform: translateX(-0.75rem);
 }
 .icon-button-base {

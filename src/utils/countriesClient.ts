@@ -1,5 +1,5 @@
-import { CountryFlagJson, CitiesByCountryJson, SimpleMap } from "../constants";
-import { HTTPManager } from "./http";
+import { CountryFlagJson, CitiesByCountryJson } from "../constants";
+import { HTTPManager, getReqUrl } from "./http";
 
 const Endpoints = {
   CitiesAll: "countries",
@@ -27,17 +27,3 @@ export class CountriesClient {
     return response.data as CountryFlagJson;
   }
 }
-
-type RequestValue = string | boolean;
-type BaseRequest = SimpleMap<RequestValue>;
-
-const getReqUrl = (domain: string, path: string, req: BaseRequest = {}): string => {
-  let queryUrl = `${domain}/${path}`;
-  if (Object.keys(req).length > 0) {
-    const queryStrArr = Object.entries(req).map(([key, value]: [string, RequestValue]) => {
-      return `${key}=${value}`;
-    });
-    queryUrl = `${queryUrl}?${queryStrArr.join("&")}`;
-  }
-  return queryUrl;
-};

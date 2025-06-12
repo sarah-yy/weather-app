@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useMemo } from "react";
 import { ChevronIcon } from "../../../../../../assets";
 import { Card, ContainedButton, IconButton } from "../../../../../../components";
-import { useCountriesContext, useThemeContext } from "../../../../../../hooks";
+import { useCountriesContext, useThemeContext, useWeatherContext } from "../../../../../../hooks";
 
 interface Props {
   handleClearCountry: () => void;
@@ -13,8 +13,18 @@ const CitiesSelect: React.FC<Props> = (props: Props) => {
   const { handleClearCountry, selectedCountry } = props;
   const { countryInfoMap } = useCountriesContext();
   const { theme } = useThemeContext();
+  const { handleSelectCity } = useWeatherContext();
 
   const countryInfo = useMemo(() => countryInfoMap[selectedCountry ?? ""], [selectedCountry, countryInfoMap]);
+
+  const onClickCity = (city: string) => {
+    if (!countryInfo?.iso3) return;
+    handleSelectCity({
+      countryIso3: countryInfo.iso3,
+      city,
+      countryName: countryInfo.name,
+    });
+  };
 
   return (
     <Card
@@ -77,14 +87,13 @@ const CitiesSelect: React.FC<Props> = (props: Props) => {
                 "min-h-[3rem]",
               )}
               key={city}
-              // onClick={() => handleCountrySelect(countryInfo.name)}
+              onClick={() => onClickCity(city)}
             >
               {city}
             </ContainedButton>
           ))}
         </div>
       )}
-      This is a separate card.
     </Card>
   );
 };

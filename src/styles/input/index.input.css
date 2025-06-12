@@ -69,3 +69,19 @@ body.light::-webkit-scrollbar-track,
 .standard-border-radius {
   border-radius: 8px;
 }
+
+.svg-fill--light path {
+  fill: var(--color-slate-500);
+}
+
+.svg-stroke--light path {
+  stroke: var(--color-slate-500);
+}
+
+.svg-fill--dark path {
+  fill: var(--color-slate-400);
+}
+
+.svg-stroke--dark path {
+  stroke: var(--color-slate-400);
+}

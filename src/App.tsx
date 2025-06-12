@@ -1,9 +1,9 @@
-import FormOverlay from "./views/FormOverlay";
+import CountrySelectForm from "./views/CountrySelectForm";
 
 function App() {
   return (
     <>
-      <FormOverlay />
+      <CountrySelectForm />
     </>
   );
 }
