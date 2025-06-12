@@ -85,3 +85,7 @@ body.light::-webkit-scrollbar-track,
 .svg-stroke--dark path {
   stroke: var(--color-slate-400);
 }
+
+.none {
+  display: none;
+}

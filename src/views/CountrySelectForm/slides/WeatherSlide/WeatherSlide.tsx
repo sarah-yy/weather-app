@@ -36,7 +36,7 @@ const WeatherSlide: FunctionComponent = () => {
           </ContainedButton>
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-4 lg:gap-6">
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
           <Card className="grid grid-cols-[7.5rem_auto] lg:grid-cols-[10rem_auto] gap-6 py-6 px-4 lg:px-10 dark:bg-slate-800/40! bg-slate-100/60!">
             <div
               className="w-[7.5rem] h-[7.5rem] lg:w-[10rem] lg:h-[10rem]"
@@ -58,7 +58,7 @@ const WeatherSlide: FunctionComponent = () => {
               <div className="flex items-baseline gap-1 mt-4">
                 <ThemedText
                   component="h1"
-                  className="text-5xl lg:text-8xl font-semibold text-start"
+                  className="text-5xl lg:text-7xl font-semibold text-start"
                 >
                   {currentWeather?.main.temp.toFixed(0)}
                 </ThemedText>

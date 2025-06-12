@@ -13,16 +13,16 @@ const WeatherStats: FunctionComponent = () => {
       title: "Min/Max Temp.",
       content: (
         <div className="flex gap-1 justify-center items-end">
-          <ThemedText component="h4" className="text-3xl font-semibold text-sky-500! dark:text-sky-400/60!">
+          <ThemedText component="h4" className="text-xl lg:text-3xl font-semibold text-sky-500! dark:text-sky-400/60!">
             {currentWeather?.main.temp_min}
           </ThemedText>
-          <ThemedText component="p" color="secondary" className="text-3xl font-semibold">
+          <ThemedText component="p" color="secondary" className="text-xl lg:text-3xl font-semibold">
             /
           </ThemedText>
-          <ThemedText component="h4" className="text-3xl font-semibold text-red-500! dark:text-red-400/60!">
+          <ThemedText component="h4" className="text-xl lg:text-3xl font-semibold text-red-500! dark:text-red-400/60!">
             {currentWeather?.main.temp_max}
           </ThemedText>
-          <ThemedText component="p" className="text-lg font-semibold">
+          <ThemedText component="p" className="text-sm md:text-lg font-semibold mb-[0.125rem] md:mb-0">
             &deg;C
           </ThemedText>
         </div>
@@ -37,7 +37,7 @@ const WeatherStats: FunctionComponent = () => {
       content: (
         <div className="flex gap-2 justify-center items-center">
           <WindIcon className={`svg-fill--${theme}`} />
-          <ThemedText component="h4" className="text-3xl font-semibold">
+          <ThemedText component="h4" className="text-xl lg:text-3xl font-semibold">
             {currentWeather?.wind.speed} m/s
           </ThemedText>
         </div>
@@ -71,12 +71,12 @@ const WeatherStat: FunctionComponent<RequiredStatParams> = (statItem: RequiredSt
   return (
     <div className="flex flex-col gap-2">
       {typeof title !== "string" ? title : (
-        <ThemedText color="secondary" component="p" className="text-md">
+        <ThemedText color="secondary" component="p" className="text-sm md:text-md">
           {title}
         </ThemedText>
       )}
       {typeof content !== "string" ? content : (
-        <ThemedText component="h4" className="text-3xl font-semibold">
+        <ThemedText component="h4" className="text-xl lg:text-3xl font-semibold">
           {content}
         </ThemedText>
       )}

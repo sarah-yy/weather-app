@@ -33,7 +33,7 @@ const WeatherForecastTable: FunctionComponent = () => {
         3hr Forecast
       </ThemedText>
 
-      <div className="flex items-center mt-4">
+      <div className="flex items-center mt-4 overflow-x-auto gap-1">
         {filters.map((filter: string, index: number) => {
           const date = new Date(filter);
           const label = index === 0 ? "Today" : getDayOfWeek(date);
@@ -45,6 +45,7 @@ const WeatherForecastTable: FunctionComponent = () => {
                 "px-3",
                 "py-1",
                 { selected: selectedFilter === filter },
+                "min-w-[5rem]",
               )}
               onClick={() => handleChangeFilter(filter)}
             >
@@ -60,7 +61,7 @@ const WeatherForecastTable: FunctionComponent = () => {
         {selectedEntries.map((entry: ForecastObj) => {
           const entryDate = new Date(entry.dt * MILLISECONDS_IN_SECOND);
           return (
-            <WeatherCard className="py-3 px-6 grid grid-cols-3 md:grid-cols-4 items-center" key={entry.dt}>
+            <WeatherCard className="py-3 px-6 grid grid-cols-[3rem_1fr_1fr] md:grid-cols-4 items-center" key={entry.dt}>
               <ThemedText className="font-semibold text-start text-sm">
                 {forceDoubleDigits(entryDate.getHours())}:{forceDoubleDigits(entryDate.getMinutes())}
               </ThemedText>
@@ -73,10 +74,11 @@ const WeatherForecastTable: FunctionComponent = () => {
                     backgroundSize: "cover",
                   }}
                 />
-                <ThemedText className="italic text-sm" color="secondary">{capitalize(entry.weather[0]?.description)}</ThemedText>
+                <ThemedText className="italic text-sm none sm:block" color="secondary">{capitalize(entry.weather[0]?.description)}</ThemedText>
+                <ThemedText className="italic text-sm block sm:none" color="secondary">{capitalize(entry.weather[0]?.main)}</ThemedText>
               </div>
 
-              <div className="none md:flex items-center justify-center gap-2">
+              <div className="none md:flex! items-center justify-center gap-2">
                 <RainIcon className={`svg-fill--${theme}`} />
                 <ThemedText className="text-sm" color="secondary">&nbsp;{entry.pop}%</ThemedText>
               </div>
