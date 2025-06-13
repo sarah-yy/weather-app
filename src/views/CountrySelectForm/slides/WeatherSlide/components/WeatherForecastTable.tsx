@@ -30,8 +30,8 @@ const WeatherForecastTable: FunctionComponent = () => {
   }, [selectedFilter, weatherForecast]);
 
   return (
-    <div className="mt-4 lg:mt-6">
-      <ThemedText component="h2" className="text-3xl font-semibold text-start">
+    <div className="mt-5 lg:mt-6">
+      <ThemedText component="h2" className="text-xl sm:text-3xl font-semibold text-start">
         3hr Forecast
       </ThemedText>
 
