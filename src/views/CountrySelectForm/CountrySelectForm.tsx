@@ -1,12 +1,14 @@
 import clsx from "clsx";
-import { FunctionComponent } from "react";
+import { FunctionComponent, Suspense, lazy } from "react";
 import { MoonIcon, SunIcon } from "../../assets";
 import { IconButton } from "../../components";
 import { Theme } from "../../constants";
 import DarkOverlayBackground from "../../assets/backgrounds/DarkOverlayBackground.jpg";
 import LightOverlayBackground from "../../assets/backgrounds/LightOverlayBackground.jpg";
 import { useWeatherContext, useThemeContext } from "../../hooks";
-import { FormSlide, WeatherSlide } from "./slides";
+import { FormSlide } from "./slides";
+
+const WeatherSlide = lazy(() => import("./slides/WeatherSlide"));
 
 const CountrySelectForm: FunctionComponent = () => {
   const { handleToggleTheme, theme } = useThemeContext();
@@ -32,7 +34,9 @@ const CountrySelectForm: FunctionComponent = () => {
       </IconButton>
 
       <FormSlide />
-      <WeatherSlide />
+      <Suspense>
+        <WeatherSlide />
+      </Suspense>
     </div>
   );
 };
