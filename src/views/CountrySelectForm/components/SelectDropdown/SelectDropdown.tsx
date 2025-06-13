@@ -6,7 +6,7 @@ import SelectContent from "./SelectContent";
 
 interface Props {
   handleClearCountry: () => void;
-  handleCountrySelect: (country: string) => void;
+  handleCountrySelect: (country: string) => void; // eslint-disable-line no-unused-vars
   selectedCountry?: string;
   countriesList: CountryInfo[];
   open: boolean;
@@ -26,7 +26,7 @@ const SelectDropdown: React.FC<Props> = (props: Props) => {
             { open },
             "left-0",
             "dropdown-div",
-            "w-full"
+            "w-full",
           )}
         >
           {open && (
@@ -47,7 +47,7 @@ const SelectDropdown: React.FC<Props> = (props: Props) => {
         <div className="fixed w-full h-full top-0 left-0 z-0" onClick={handleClose} />
       )}
     </Fragment>
-  )
+  );
 };
 
 export default SelectDropdown;

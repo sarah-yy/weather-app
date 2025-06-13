@@ -52,7 +52,7 @@ const CitiesSelect: React.FC<Props> = (props: Props) => {
         "select-city-page",
         "py-3",
         "px-2",
-        { active: !!selectedCountry }
+        { active: !!selectedCountry },
       )}
     >
       <div className="flex gap-2 pb-2">

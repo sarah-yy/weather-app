@@ -27,7 +27,7 @@ try {
   }
 } catch {}; // eslint-disable-line no-empty
 
-export const ThemeContext = createContext<ThemeProps | undefined>(undefined);
+export const ThemeContext = createContext<ThemeProps | undefined>(undefined); // eslint-disable-line react-refresh/only-export-components
 
 const ThemeProvider: FunctionComponent<PropsWithChildren> = (props: PropsWithChildren) => {
   const { children } = props;
@@ -41,7 +41,7 @@ const ThemeProvider: FunctionComponent<PropsWithChildren> = (props: PropsWithChi
 
   const handleToggleTheme = () => {
     handleThemeChange(theme === Theme.Light ? Theme.Dark : Theme.Light);
-  }
+  };
 
   useEffect(() => {
     changeHtmlTheme(defaultTheme);

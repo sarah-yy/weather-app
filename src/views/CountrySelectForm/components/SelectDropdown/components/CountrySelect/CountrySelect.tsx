@@ -8,7 +8,7 @@ import { CountryInfo, Theme } from "../../../../../../constants";
 import { useThemeContext } from "../../../../../../hooks";
 
 interface Props {
-  handleCountrySelect: (country: string) => void;
+  handleCountrySelect: (country: string) => void; // eslint-disable-line no-unused-vars
   searchInput: string;
   countriesList: CountryInfo[];
 }
@@ -107,34 +107,6 @@ const CountrySelect: FunctionComponent<Props> = (props: Props) => {
             </ContainedButton>
           );
         })}
-        {/* {countriesList.map((countryInfo: CountryInfo) => (
-          <ContainedButton
-            className={clsx(
-              "p-3",
-              "flex",
-              "justify-start",
-              "items-center",
-              "gap-3",
-              "font-semibold",
-              "max-h-[3rem]",
-              "min-h-[3rem]",
-            )}
-            data-index={}
-            key={countryInfo.name}
-            onClick={() => handleCountrySelect(countryInfo.name)}
-          >
-            <div
-              className="w-8 h-5 flag"
-              style={{
-                backgroundImage: `url(${countryInfo.flagImgUrl})`,
-                backgroundSize: "cover",
-                backgroundPositionY: "center",
-              }}
-            />
-
-            {countryInfo.name}
-          </ContainedButton>
-        ))} */}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import { BaseButtonProps, FillTypeProps, PathColor, Theme } from "../../constants";
+import { BaseButtonProps, FillTypeProps, PathColor } from "../../constants";
 import { useThemeContext } from "../../hooks";
 
 type PropsType = BaseButtonProps & FillTypeProps;

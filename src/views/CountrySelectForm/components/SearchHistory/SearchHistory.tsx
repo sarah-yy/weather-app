@@ -12,7 +12,7 @@ const SearchHistory: FunctionComponent = () => {
 
       </div>
     </Fragment>
-  )
+  );
 };
 
 export default SearchHistory;

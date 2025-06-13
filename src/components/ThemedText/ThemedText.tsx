@@ -18,7 +18,7 @@ const ThemedText: React.FC<Props> = (props: Props) => {
           "text-slate-500 dark:text-slate-400": color === "secondary",
         },
         className,
-      )
+      ),
     },
     children,
   );

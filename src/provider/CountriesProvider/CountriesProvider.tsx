@@ -6,7 +6,7 @@ interface CountriesProps {
   countryInfoMap: CountryInfoMap;
 }
 
-export const CountriesContext = createContext<CountriesProps | undefined>(undefined);
+export const CountriesContext = createContext<CountriesProps | undefined>(undefined); // eslint-disable-line react-refresh/only-export-components
 
 const overrideCities: SimpleMap<string[]> = {
   Singapore: ["Singapore"],

@@ -112,7 +112,7 @@ const FormSlide: FunctionComponent = () => {
         </Suspense>
       </div>
     </SlideLayout>
-  )
+  );
 };
 
 export default FormSlide;

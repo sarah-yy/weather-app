@@ -11,7 +11,6 @@ const WeatherSlide: FunctionComponent = () => {
   const { weatherForecast, weatherQueryParams, currentWeather, handleClearWeather } = useWeatherContext();
   const { countryInfoMap } = useCountriesContext();
   const countryInfo = useMemo(() => countryInfoMap[weatherQueryParams?.countryName ?? ""], [countryInfoMap, weatherQueryParams]);
-  console.log("currentWeather", currentWeather, "countryInfo", countryInfo);
   const weatherItem = currentWeather?.weather[0];
 
   return (
@@ -86,7 +85,7 @@ const WeatherSlide: FunctionComponent = () => {
         <WeatherForecastTable />
       </div>
     </SlideLayout>
-  )
+  );
 };
 
 export default WeatherSlide;

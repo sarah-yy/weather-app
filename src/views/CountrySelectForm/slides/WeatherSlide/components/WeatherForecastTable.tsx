@@ -22,7 +22,7 @@ const WeatherForecastTable: FunctionComponent = () => {
     const dateFilters = Object.keys(weatherForecast.entries);
     setFilters(dateFilters.slice(0, MAX_FILTERS));
     setSelectedFilter(dateFilters[0]);
-  }, [weatherForecast?.entries]);
+  }, [weatherForecast?.entries]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const selectedEntries = useMemo(() => {
     if (!weatherForecast) return [];
@@ -55,7 +55,7 @@ const WeatherForecastTable: FunctionComponent = () => {
                 {label}
               </ThemedText>
             </ContainedButton>
-          )
+          );
         })}
       </div>
 

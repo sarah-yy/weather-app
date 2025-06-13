@@ -20,7 +20,7 @@ const CountrySelectForm: FunctionComponent = () => {
         "h-full",
         "min-h-screen",
         "background-div",
-        { "overflow-auto": !!weatherForecast && !!currentWeather }
+        { "overflow-auto": !!weatherForecast && !!currentWeather },
       )}
       style={{
         backgroundSize: "cover",

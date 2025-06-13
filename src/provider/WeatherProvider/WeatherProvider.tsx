@@ -5,12 +5,12 @@ import { OpenWeatherClient } from "../../utils";
 interface WeatherProps {
   currentWeather: CurrentWeatherResultObj | undefined;
   handleClearWeather: () => void;
-  handleSelectCity: (weatherParams: WeatherQueryParams) => void;
+  handleSelectCity: (weatherParams: WeatherQueryParams) => void; // eslint-disable-line no-unused-vars
   weatherForecast: ForecastsObj | undefined;
   weatherQueryParams: WeatherQueryParams | undefined;
 }
 
-export const WeatherContext = createContext<WeatherProps | undefined>(undefined);
+export const WeatherContext = createContext<WeatherProps | undefined>(undefined); // eslint-disable-line react-refresh/only-export-components
 
 const WeatherProvider: FunctionComponent<PropsWithChildren> = (props: PropsWithChildren) => {
   const { children } = props;
@@ -70,7 +70,7 @@ const WeatherProvider: FunctionComponent<PropsWithChildren> = (props: PropsWithC
       }
     };
     queryWeather();
-  }, [weatherQueryParams]);
+  }, [weatherQueryParams, weatherClient]);
 
   const handleSelectCity = (weatherParams: WeatherQueryParams) => {
     setWeatherQueryParams(weatherParams);

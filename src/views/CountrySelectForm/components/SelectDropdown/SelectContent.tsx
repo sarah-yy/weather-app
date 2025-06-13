@@ -6,7 +6,7 @@ const CitiesSelect = lazy(() => import("./components/CitiesSelect"));
 
 interface Props {
   handleClearCountry: () => void;
-  handleCountrySelect: (country: string) => void;
+  handleCountrySelect: (country: string) => void; // eslint-disable-line no-unused-vars
   selectedCountry?: string;
   countriesList: CountryInfo[];
   searchInput: string;
