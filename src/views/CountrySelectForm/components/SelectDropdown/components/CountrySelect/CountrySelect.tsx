@@ -103,7 +103,7 @@ const CountrySelect: FunctionComponent<Props> = (props: Props) => {
                 }}
               />
 
-              {countryInfo.name}
+              <ThemedText className="text-ellipsis max-h-[1.5rem] whitespace-nowrap">{countryInfo.name}</ThemedText>
             </ContainedButton>
           );
         })}
