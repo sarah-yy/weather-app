@@ -1,7 +1,8 @@
 import { FunctionComponent, useMemo } from "react";
 import { useThemeContext, useWeatherContext } from "../../../../../hooks";
-import { Card, ThemedText } from "../../../../../components";
+import { ThemedText } from "../../../../../components";
 import { WindIcon } from "../../../../../assets";
+import WeatherCard from "./WeatherCard";
 
 const WeatherStats: FunctionComponent = () => {
   const { theme } = useThemeContext();
@@ -50,11 +51,11 @@ const WeatherStats: FunctionComponent = () => {
   }, [currentWeather, theme]);
 
   return (
-    <Card className="grid grid-cols-2 gap-y-2 py-6 px-4 lg:px-10 dark:bg-slate-800/40! bg-slate-100/60!">
+    <WeatherCard className="grid grid-cols-2 gap-y-2 py-6 px-4 lg:px-10">
       {statItems.map((statItem: StatItem) => (
         <WeatherStat key={statItem.key} title={statItem.title} content={statItem.content} />
       ))}
-    </Card>
+    </WeatherCard>
   );
 };
 

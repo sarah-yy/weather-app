@@ -1,2 +1,2 @@
-export { default as WeatherForecastTable } from "./WeatherForecastTable";
+export { default as MainTempCard } from "./MainTempCard";
 export { default as WeatherStats } from "./WeatherStats";
