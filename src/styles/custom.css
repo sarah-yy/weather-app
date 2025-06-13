@@ -1,0 +1,86 @@
+.background-div {
+  z-index: 1;
+  transition: 0.5s ease;
+}
+
+.weather-slide-div {
+  z-index: 10;
+  transform: translateX(100%);
+}
+.weather-slide-div.slide-in {
+  transform: translateX(0);
+}
+.form-slide-div {
+  opacity: 1;
+  z-index: 1;
+}
+.form-slide-div.fade {
+  opacity: 0;
+  z-index: -1;
+}
+.slide-transition {
+  transition: 0.3s ease;
+}
+
+.light-input-border,
+.light-input-border:focus {
+  border-bottom: 1px solid var(--color-slate-800) !important;
+}
+
+.light-input-border::placeholder {
+  color: var(--color-slate-500);
+}
+
+.dark-input-border,
+.dark-input-border:focus {
+  border-bottom: 1px solid var(--color-white) !important;
+}
+
+.dark-input-border::placeholder {
+  color: var(--color-slate-400);
+}
+
+.error-input-border,
+.error-input-border:focus {
+  border-bottom: 1px solid var(--color-red-500) !important;
+}
+
+.error-text {
+  color: var(--color-red-500) !important;
+}
+
+.dropdown-div {
+  transform: translateY(-10%);
+  transition: transform 0.2s ease;
+}
+.dropdown-div.open {
+  transform: translateY(0);
+}
+.dropdown-card {
+  opacity: 0;
+  transition: 0.2s ease;
+}
+.dropdown-card.open {
+  opacity: 1;
+  z-index: 1000;
+}
+
+.flag {
+  border-radius: 2px;
+}
+
+.select-city-page {
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+.select-city-page.active {
+  transform: translateX(0);
+}
+
+.back-icon {
+  transform: rotate(180deg);
+}
+
+.back-btn:hover::before {
+  transform: translateX(-0.5rem); 
+}
