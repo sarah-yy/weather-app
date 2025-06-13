@@ -108,6 +108,8 @@ const CitiesSelect: React.FC<Props> = (props: Props) => {
                     "min-h-[3rem]",
                     "absolute",
                     "w-full",
+                    "text-ellipsis",
+                    "whitespace-nowrap",
                   )}
                   data-index={virtualRow.index}
                   key={virtualRow.key}
