@@ -50,6 +50,19 @@ jobs:
           echo "${{ secrets.OPENSSH_PEM }}" > private_key.pem
           chmod 600 private_key.pem
 
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: ${{ secrets.AWS_ARN }}
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Add IP Address to Security Group
+        uses: passeidireto/aws-add-ip-to-security-group-action@v1 # could be @main
+        with:
+          aws_security_group_ids: ${{ secrets.AWS_SECURITY_GROUP_ID }}
+          port_range: '22'
+
       - name: Deploy to AWS
         run: |
           if [[ "${{ github.ref_name }}" == "main" ]]; then
