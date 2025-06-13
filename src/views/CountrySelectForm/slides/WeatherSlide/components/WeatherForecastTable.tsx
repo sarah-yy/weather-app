@@ -7,6 +7,8 @@ import { capitalize, getDayOfWeek, forceDoubleDigits } from "../../../../../util
 import { ForecastObj, MILLISECONDS_IN_SECOND } from "../../../../../constants";
 import WeatherCard from "./WeatherCard";
 
+const MAX_FILTERS = 5;
+
 const WeatherForecastTable: FunctionComponent = () => {
   const { theme } = useThemeContext();
   const { weatherForecast } = useWeatherContext();
@@ -18,7 +20,7 @@ const WeatherForecastTable: FunctionComponent = () => {
   useEffect(() => {
     if (!weatherForecast) return;
     const dateFilters = Object.keys(weatherForecast.entries);
-    setFilters(dateFilters);
+    setFilters(dateFilters.slice(0, MAX_FILTERS));
     setSelectedFilter(dateFilters[0]);
   }, [weatherForecast?.entries]);
 
@@ -45,7 +47,7 @@ const WeatherForecastTable: FunctionComponent = () => {
                 "px-3",
                 "py-1",
                 { selected: selectedFilter === filter },
-                "min-w-[5rem]",
+                "min-w-[7rem]",
               )}
               onClick={() => handleChangeFilter(filter)}
             >

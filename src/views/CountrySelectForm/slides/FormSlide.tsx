@@ -67,7 +67,7 @@ const FormSlide: FunctionComponent = () => {
             {
               "light-input-border": theme === Theme.Light,
               "dark-input-border": theme === Theme.Dark,
-              "error-input-border": countriesList.length === 0,
+              "error-input-border": input.length > 0 && countriesList.length === 0,
             },
           )}
         >

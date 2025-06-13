@@ -26,21 +26,27 @@ const CountriesProvider: FunctionComponent<PropsWithChildren> = (props: PropsWit
         ]);
         
         const countriesInfo: SimpleMap<CountryInfo> = {};
+        countryFlagsAll.forEach((flagObj: CountryFlagIndiv) => {
+          const { flag, iso2, iso3, name } = flagObj;
+          countriesInfo[name] = {
+            name,
+            iso2,
+            iso3,
+            flagImgUrl: flag,
+          };
+        });
         citiesAll.forEach((citiesObj: CitiesByCountryIndivJson) => {
           const { country, cities } = citiesObj;
+          if (!countriesInfo[country]?.iso3) {
+            delete countriesInfo[country];
+            return;
+          }
+
           countriesInfo[country] = {
+            ...countriesInfo[country],
             cities: overrideCities[country] ?? cities,
             name: country,
           };
-        });
-        countryFlagsAll.forEach((flagObj: CountryFlagIndiv) => {
-          const { flag, iso2, iso3, name } = flagObj;
-          if (!countriesInfo[name]) {
-            countriesInfo[name] = { name };
-          }
-          countriesInfo[name].flagImgUrl = flag;
-          countriesInfo[name].iso2 = iso2;
-          countriesInfo[name].iso3 = iso3;
         });
         setCountryInfoMap(countriesInfo);
       } catch (err) {

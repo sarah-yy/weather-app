@@ -1,5 +1,6 @@
+import { useVirtualizer, VirtualItem } from "@tanstack/react-virtual";
 import clsx from "clsx";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useRef } from "react";
 import NoResultsDark from "../../../../../../assets/graphics/NoResultsDark.png";
 import NoResultsLight from "../../../../../../assets/graphics/NoResultsLight.png";
 import { ContainedButton, ThemedText } from "../../../../../../components";
@@ -15,6 +16,16 @@ interface Props {
 const CountrySelect: FunctionComponent<Props> = (props: Props) => {
   const { handleCountrySelect, countriesList, searchInput } = props;
   const { theme } = useThemeContext();
+  const parentRef = useRef<HTMLDivElement>(null);
+
+  const virtualizer = useVirtualizer({
+    count: countriesList.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 48,
+    scrollToFn: () => null,
+    gap: 8,
+  });
+  const items = virtualizer.getVirtualItems();
 
   if (countriesList.length === 0) {
     return (
@@ -46,45 +57,85 @@ const CountrySelect: FunctionComponent<Props> = (props: Props) => {
   return (
     <div
       className={clsx(
-        "flex",
-        "flex-col",
         "max-h-[16rem]",
         "min-h-[16rem]",
         "overflow-y-scroll",
         "w-full",
-        "gap-2",
         `div-scroll--${theme}`,
         "p-2",
-        "relative",
       )}
+      ref={parentRef}
     >
-      {countriesList.map((countryInfo: CountryInfo) => (
-        <ContainedButton
-          className={clsx(
-            "p-3",
-            "flex",
-            "justify-start",
-            "items-center",
-            "gap-3",
-            "font-semibold",
-            "max-h-[3rem]",
-            "min-h-[3rem]",
-          )}
-          key={countryInfo.name}
-          onClick={() => handleCountrySelect(countryInfo.name)}
-        >
-          <div
-            className="w-8 h-5 flag"
-            style={{
-              backgroundImage: `url(${countryInfo.flagImgUrl})`,
-              backgroundSize: "cover",
-              backgroundPositionY: "center",
-            }}
-          />
+      <div
+        className="relative flex flex-col"
+        style={{ height: virtualizer.getTotalSize() }}
+      >
+        {items.map((virtualRow: VirtualItem) => {
+          const countryInfo = countriesList[virtualRow.index];
+          return (
+            <ContainedButton
+              className={clsx(
+                "p-3",
+                "flex",
+                "justify-start",
+                "items-center",
+                "gap-3",
+                "font-semibold",
+                "max-h-[3rem]",
+                "min-h-[3rem]",
+                "absolute",
+                "w-full",
+              )}
+              data-index={virtualRow.index}
+              key={virtualRow.key}
+              onClick={() => handleCountrySelect(countryInfo.name)}
+              style={{
+                height: virtualRow.size,
+                transform: `translateY(${virtualRow.start}px)`,
+              }}
+            >
+              <div
+                className="w-8 h-5 flag"
+                style={{
+                  backgroundImage: `url(${countryInfo?.flagImgUrl ?? ""})`,
+                  backgroundSize: "cover",
+                  backgroundPositionY: "center",
+                }}
+              />
 
-          {countryInfo.name}
-        </ContainedButton>
-      ))}
+              {countryInfo.name}
+            </ContainedButton>
+          );
+        })}
+        {/* {countriesList.map((countryInfo: CountryInfo) => (
+          <ContainedButton
+            className={clsx(
+              "p-3",
+              "flex",
+              "justify-start",
+              "items-center",
+              "gap-3",
+              "font-semibold",
+              "max-h-[3rem]",
+              "min-h-[3rem]",
+            )}
+            data-index={}
+            key={countryInfo.name}
+            onClick={() => handleCountrySelect(countryInfo.name)}
+          >
+            <div
+              className="w-8 h-5 flag"
+              style={{
+                backgroundImage: `url(${countryInfo.flagImgUrl})`,
+                backgroundSize: "cover",
+                backgroundPositionY: "center",
+              }}
+            />
+
+            {countryInfo.name}
+          </ContainedButton>
+        ))} */}
+      </div>
     </div>
   );
 };

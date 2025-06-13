@@ -5,11 +5,12 @@ import { IconButton } from "../../components";
 import { Theme } from "../../constants";
 import DarkOverlayBackground from "../../assets/backgrounds/DarkOverlayBackground.jpg";
 import LightOverlayBackground from "../../assets/backgrounds/LightOverlayBackground.jpg";
-import { useThemeContext } from "../../hooks";
+import { useWeatherContext, useThemeContext } from "../../hooks";
 import { FormSlide, WeatherSlide } from "./slides";
 
 const CountrySelectForm: FunctionComponent = () => {
   const { handleToggleTheme, theme } = useThemeContext();
+  const { weatherForecast, currentWeather } = useWeatherContext();
 
   return (
     <div
@@ -19,6 +20,7 @@ const CountrySelectForm: FunctionComponent = () => {
         "h-full",
         "min-h-screen",
         "background-div",
+        { "overflow-auto": !!weatherForecast && !!currentWeather }
       )}
       style={{
         backgroundSize: "cover",

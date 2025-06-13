@@ -1,5 +1,6 @@
+import { useVirtualizer, VirtualItem } from "@tanstack/react-virtual";
 import clsx from "clsx";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { ChevronIcon } from "../../../../../../assets";
 import { Card, ContainedButton, IconButton } from "../../../../../../components";
 import { useCountriesContext, useThemeContext, useWeatherContext } from "../../../../../../hooks";
@@ -14,10 +15,25 @@ const CitiesSelect: React.FC<Props> = (props: Props) => {
   const { countryInfoMap } = useCountriesContext();
   const { theme } = useThemeContext();
   const { handleSelectCity } = useWeatherContext();
+  const parentRef = useRef<HTMLDivElement>(null);
 
-  const countryInfo = useMemo(() => countryInfoMap[selectedCountry ?? ""], [selectedCountry, countryInfoMap]);
+  const { cities, countryInfo } = useMemo(() => {
+    const countryInfo = countryInfoMap[selectedCountry ?? ""];
+    const cities = countryInfo?.cities ?? [];
+    return { cities, countryInfo };
+  }, [selectedCountry, countryInfoMap]);
+
+  const virtualizer = useVirtualizer({
+    count: cities.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 48,
+    scrollToFn: () => null,
+    gap: 8,
+  });
+  const items = virtualizer.getVirtualItems();
 
   const onClickCity = (city: string) => {
+    console.log("countryInfo", countryInfo);
     if (!countryInfo?.iso3) return;
     handleSelectCity({
       countryIso3: countryInfo.iso3,
@@ -64,34 +80,47 @@ const CitiesSelect: React.FC<Props> = (props: Props) => {
       {countryInfo?.cities && (
         <div
           className={clsx(
-            "flex",
-            "flex-col",
             "overflow-y-scroll",
             "w-full",
-            "gap-2",
             `div-scroll--${theme}`,
             "p-2",
-            "relative",
+            "max-h-[14rem]",
+            "min-h-[14rem]",
           )}
+          ref={parentRef}
         >
-          {countryInfo.cities.map((city: string) => (
-            <ContainedButton
-              className={clsx(
-                "p-3",
-                "flex",
-                "justify-start",
-                "items-center",
-                "gap-3",
-                "font-semibold",
-                "max-h-[3rem]",
-                "min-h-[3rem]",
-              )}
-              key={city}
-              onClick={() => onClickCity(city)}
-            >
-              {city}
-            </ContainedButton>
-          ))}
+          <div
+            className="relative flex flex-col"
+            style={{ height: virtualizer.getTotalSize() }}
+          >
+            {items.map((virtualRow: VirtualItem) => {
+              const city = cities[virtualRow.index];
+              return (
+                <ContainedButton
+                  className={clsx(
+                    "p-3",
+                    "flex",
+                    "justify-start",
+                    "items-center",
+                    "gap-3",
+                    "font-semibold",
+                    "max-h-[3rem]",
+                    "min-h-[3rem]",
+                    "absolute",
+                    "w-full",
+                  )}
+                  data-index={virtualRow.index}
+                  key={virtualRow.key}
+                  onClick={() => onClickCity(city)}
+                  style={{
+                    transform: `translateY(${virtualRow.start}px)`,
+                  }}
+                >
+                  {city}
+                </ContainedButton>
+              );
+            })}
+          </div>
         </div>
       )}
     </Card>
