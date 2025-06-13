@@ -34,8 +34,8 @@ const CountrySelect: FunctionComponent<Props> = (props: Props) => {
           "flex",
           "justify-center",
           "items-center",
-          "max-h-[16rem]",
-          "min-h-[16rem]",
+          "max-h-[14rem]",
+          "min-h-[14rem]",
         )}
       >
         <div>
@@ -57,8 +57,8 @@ const CountrySelect: FunctionComponent<Props> = (props: Props) => {
   return (
     <div
       className={clsx(
-        "max-h-[16rem]",
-        "min-h-[16rem]",
+        "max-h-[14rem]",
+        "min-h-[14rem]",
         "overflow-y-scroll",
         "w-full",
         `div-scroll--${theme}`,

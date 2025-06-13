@@ -33,7 +33,6 @@ const CitiesSelect: React.FC<Props> = (props: Props) => {
   const items = virtualizer.getVirtualItems();
 
   const onClickCity = (city: string) => {
-    console.log("countryInfo", countryInfo);
     if (!countryInfo?.iso3) return;
     handleSelectCity({
       countryIso3: countryInfo.iso3,
@@ -46,8 +45,8 @@ const CitiesSelect: React.FC<Props> = (props: Props) => {
     <Card
       className={clsx(
         "absolute",
-        "max-h-[16rem]",
-        "min-h-[16rem]",
+        "max-h-[14rem]",
+        "min-h-[14rem]",
         "w-full",
         "top-0",
         "select-city-page",
@@ -56,7 +55,7 @@ const CitiesSelect: React.FC<Props> = (props: Props) => {
         { active: !!selectedCountry }
       )}
     >
-      <div className="flex gap-2">
+      <div className="flex gap-2 pb-2">
         <IconButton onClick={handleClearCountry}>
           <ChevronIcon className="back-icon w-4 h-4" />
         </IconButton>
@@ -83,14 +82,15 @@ const CitiesSelect: React.FC<Props> = (props: Props) => {
             "overflow-y-scroll",
             "w-full",
             `div-scroll--${theme}`,
-            "p-2",
-            "max-h-[14rem]",
-            "min-h-[14rem]",
+            "px-2",
+            "pb-2",
+            "max-h-[11rem]",
+            "min-h-[11rem]",
           )}
           ref={parentRef}
         >
           <div
-            className="relative flex flex-col"
+            className="relative flex flex-col mb-2"
             style={{ height: virtualizer.getTotalSize() }}
           >
             {items.map((virtualRow: VirtualItem) => {

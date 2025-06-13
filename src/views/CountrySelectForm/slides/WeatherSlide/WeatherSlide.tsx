@@ -21,7 +21,7 @@ const WeatherSlide: FunctionComponent = () => {
         "top-0",
         "weather-slide-div",
         { "slide-in": !!currentWeather && !!weatherForecast },
-        "pt-[5rem]!",
+        "pt-[3.5rem]!",
         "sm:px-6",
         "md:px-8",
       )}

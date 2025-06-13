@@ -1,7 +1,8 @@
 import clsx from "clsx";
 import { ChangeEvent, FunctionComponent, Suspense, useMemo, useState } from "react";
-import { HistoryIcon } from "../../../assets";
-import { IconButton, ThemedText } from "../../../components";
+// import { HistoryIcon } from "../../../assets";
+import WeatherAppLogo from "../../../assets/graphics/WeatherAppLogo.png";
+import { ThemedText } from "../../../components";
 import { CountryInfo, Theme } from "../../../constants";
 import { useCountriesContext, useDebounce, useThemeContext, useWeatherContext } from "../../../hooks";
 
@@ -48,6 +49,11 @@ const FormSlide: FunctionComponent = () => {
 
   return (
     <SlideLayout className={clsx("form-slide-div", { fade: !!currentWeather && !!weatherForecast })}>
+      <img
+        src={WeatherAppLogo}
+        className="standard-border-radius w-[4.5rem] h-[4.5rem] mx-auto mt-0 mb-2 block"
+      />
+
       <ThemedText component="h1" className="text-4xl sm:text-5xl font-semibold">
         Weather App
       </ThemedText>
@@ -88,9 +94,9 @@ const FormSlide: FunctionComponent = () => {
             onChange={handleChangeInput}
           />
           
-          <IconButton className="w-10 h-10">
+          {/* <IconButton className="w-10 h-10">
             <HistoryIcon className="w-6 h-6" />
-          </IconButton>
+          </IconButton> */}
         </div>
 
         <Suspense>
