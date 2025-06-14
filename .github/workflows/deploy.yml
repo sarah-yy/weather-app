@@ -11,6 +11,8 @@ permissions:
 
 jobs:
   deploy:
+    env:
+      AWS_DEFAULT_REGION: 'ap-southeast-1'
     runs-on: ubuntu-latest
 
     steps:
@@ -54,18 +56,17 @@ jobs:
           echo "${{ secrets.OPENSSH_PEM }}" > private_key.pem
           chmod 600 private_key.pem
 
-      - name: Configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1.7.0
-        with:
-          role-to-assume: ${{ secrets.AWS_ARN }}
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Get Github action IP
+        id: ip
+        uses: haythem/public-ip@v1.2
 
-      - name: Add IP Address to Security Group
-        uses: passeidireto/aws-add-ip-to-security-group-action@v1.0.0
-        with:
-          aws_security_group_ids: ${{ secrets.AWS_SECURITY_GROUP_ID }}
-          port_range: '22'
+      - name: Add Github Actions IP to Security group
+        run: |
+          aws ec2 authorize-security-group-ingress --group-name ${{ secrets.AWS_SECURITY_GROUP_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32    
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
 
       - name: Deploy to AWS
         run: |
@@ -73,6 +74,15 @@ jobs:
             rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i private_key.pem" dist/* $AWS_USER@$AWS_HOST:/usr/share/nginx/html/weather-app/
           fi
           rm -f private_key.pem
+
+      - name: Remove Github Actions IP from security group
+        run: |
+          aws ec2 revoke-security-group-ingress --group-name ${{ env.AWS_SECURITY_GROUP_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
+        if: always()
 
       - name: Clean up
         run: |
