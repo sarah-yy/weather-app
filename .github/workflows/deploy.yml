@@ -61,13 +61,19 @@ jobs:
         id: ip
         uses: haythem/public-ip@v1.2
 
-      - name: Add Github Actions IP to Security group
-        run: |
-          aws ec2 authorize-security-group-ingress --group-name $AWS_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32    
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1.0.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Add IP to EC2 security group
+        uses: twosense/add-ip-to-ec2-security-group@v1
+        with:
+          security-group-id: ${{ secrets.AWS_SECURITY_GROUP_ID }}
+          port: 22
+          ip: ${{ steps.ip.outputs.ipv4 }}
 
       - name: Deploy to AWS
         run: |
@@ -75,15 +81,6 @@ jobs:
             rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i private_key.pem" dist/* $AWS_USER@$AWS_HOST:/usr/share/nginx/html/weather-app/
           fi
           rm -f private_key.pem
-
-      - name: Remove Github Actions IP from security group
-        run: |
-          aws ec2 revoke-security-group-ingress --group-name $AWS_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
-        if: always()
 
       - name: Clean up
         run: |
