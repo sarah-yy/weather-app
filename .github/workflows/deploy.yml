@@ -75,12 +75,21 @@ jobs:
           port: 22
           ip: ${{ steps.ip.outputs.ipv4 }}
 
+      - name: Add IP address to security group
+        run: |
+          aws ec2 authorize-security-group-ingress --group-name $AWS_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
       - name: Deploy to AWS
         run: |
           if [[ "${{ github.ref_name }}" == "main" ]]; then
             rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i private_key.pem" dist/* $AWS_USER@$AWS_HOST:/usr/share/nginx/html/weather-app/
           fi
           rm -f private_key.pem
+
+      - name: Remove IP address from security group
+        run: |
+          aws ec2 revoke-security-group-ingress --group-name $AWS_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+        if: always()
 
       - name: Clean up
         run: |
