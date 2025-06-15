@@ -72,7 +72,7 @@ jobs:
       - name: Deploy to AWS
         run: |
           if [[ "${{ github.ref_name }}" == "main" ]]; then
-            rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i private_key.pem" dist/* $AWS_USER@$AWS_HOST:/usr/share/nginx/html/weather-app/
+            rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i private_key.pem" dist/* $AWS_USER@$AWS_HOST:/usr/share/nginx/html/weather-app/ --omit-dir-times
           fi
           rm -f private_key.pem
 
