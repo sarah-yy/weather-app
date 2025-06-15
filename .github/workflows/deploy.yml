@@ -62,10 +62,10 @@ jobs:
         uses: haythem/public-ip@v1.2
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1.0.0
+        uses: aws-actions/configure-aws-credentials@v4.2.1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          role-to-assume: ${{ secrets.AWS_ARN }}
+          role-session-name: GitHubActions
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
       - name: Add IP to EC2 security group
