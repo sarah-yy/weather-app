@@ -68,13 +68,6 @@ jobs:
           role-session-name: GitHubActions
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
-      - name: Add IP to EC2 security group
-        uses: twosense/add-ip-to-ec2-security-group@v1
-        with:
-          security-group-id: ${{ secrets.AWS_SECURITY_GROUP_ID }}
-          port: 22
-          ip: ${{ steps.ip.outputs.ipv4 }}
-
       - name: Add IP address to security group
         run: |
           aws ec2 authorize-security-group-ingress --group-name $AWS_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
