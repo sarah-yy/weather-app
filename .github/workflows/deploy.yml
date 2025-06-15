@@ -61,16 +61,13 @@ jobs:
         id: ip
         uses: haythem/public-ip@v1.2
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4.2.1
-        with:
-          role-to-assume: ${{ secrets.AWS_ARN }}
-          role-session-name: GitHubActions
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
-
       - name: Add IP address to security group
         run: |
           aws ec2 authorize-security-group-ingress --group-name $AWS_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
 
       - name: Deploy to AWS
         run: |
@@ -82,6 +79,10 @@ jobs:
       - name: Remove IP address from security group
         run: |
           aws ec2 revoke-security-group-ingress --group-name $AWS_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
         if: always()
 
       - name: Clean up
