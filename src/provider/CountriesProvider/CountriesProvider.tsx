@@ -4,8 +4,8 @@ import { CountriesClient } from "../../utils";
 
 interface CountriesProps {
   countryInfoMap: CountryInfoMap;
-  handleAddToSearchHistory: (cityCountry: CountrySearchHistory) => void;
-  handleRemoveFromSearchHistory: (cityCountry: CountrySearchHistory) => void;
+  handleAddToSearchHistory: (cityCountry: CountrySearchHistory) => void; // eslint-disable-line no-unused-vars
+  handleRemoveFromSearchHistory: (cityCountry: CountrySearchHistory) => void; // eslint-disable-line no-unused-vars
   handleRemoveAllSearchHistory: () => void;
   searchHistoryData: SimpleMap<CountrySearchHistory>;
   searchHistoryOrder: string[];
@@ -36,7 +36,7 @@ try {
   defaultSearchHistoryData = localStoreHistoryData as SimpleMap<CountrySearchHistory>;
 } catch {
   defaultSearchHistoryData = { ...defaultSearchHistory.data };
-} // eslint-disable-line no-empty
+}
 
 let defaultSearchHistoryOrder: string[] = [ ...defaultSearchHistory.order ];
 try {
@@ -52,7 +52,7 @@ try {
   defaultSearchHistoryOrder = localStoreHistoryOrder as string[];
 } catch {
   defaultSearchHistoryOrder = [ ...defaultSearchHistory.order ];
-} // eslint-disable-line no-empty
+}
 
 const CountriesProvider: FunctionComponent<PropsWithChildren> = (props: PropsWithChildren) => {
   const { children } = props;

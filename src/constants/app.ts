@@ -14,11 +14,10 @@ export type ThemeValue = typeof Theme[keyof typeof Theme];
 
 export const localStorageKeys: { [key: string]: string } = {
   theme: "@app/SET_THEME",
-  searchHistory: "@country/SET_SEARCH_HISTORY",
   searchHistoryData: "@country/SET_SEARCH_HISTORY_DATA",
   searchHistoryOrder: "@country/SET_SEARCH_HISTORY_ORDER",
 };
 
-export const setLocalStorage = <T extends unknown>(key: string, value: T): void => {
+export const setLocalStorage = (key: string, value: any): void => {
   localStorage.setItem(key, JSON.stringify(value));
 };

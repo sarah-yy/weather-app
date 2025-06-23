@@ -40,7 +40,7 @@ const SearchHistory: FunctionComponent = () => {
     const newSearchObj = { ...searchObj } as CountrySearch;
     delete newSearchObj.itemKey;
     handleRemoveFromSearchHistory(newSearchObj as CountrySearchHistory);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onClickCity = useCallback((searchObj: SearchObj) => {
     const { city, country } = searchObj;
@@ -55,7 +55,7 @@ const SearchHistory: FunctionComponent = () => {
       city,
       country: country,
     });
-  }, [countryInfoMap]);
+  }, [countryInfoMap]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (searchObjArr.length === 0) {
     return null;
@@ -108,8 +108,8 @@ const SearchHistory: FunctionComponent = () => {
 };
 
 interface SearchOptionProps {
-  handleRemove: (searchObj: SearchObj) => void;
-  onClickCity: (searchObj: SearchObj) => void;
+  handleRemove: (searchObj: SearchObj) => void; // eslint-disable-line no-unused-vars
+  onClickCity: (searchObj: SearchObj) => void; // eslint-disable-line no-unused-vars
   searchObj: SearchObj;
 }
 
