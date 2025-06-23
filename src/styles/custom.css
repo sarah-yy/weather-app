@@ -82,5 +82,9 @@
 }
 
 .back-btn:hover::before {
-  transform: translateX(-0.5rem); 
+  transform: translateX(-0.5rem);
+}
+
+.search-history-btn:hover::before {
+  transform: translateX(0);
 }

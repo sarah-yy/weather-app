@@ -1,4 +1,5 @@
 export { ReactComponent as ChevronIcon } from "./Chevron.svg";
+export { ReactComponent as DeleteIcon } from "./Delete.svg";
 export { ReactComponent as HistoryIcon } from "./History.svg";
 export { ReactComponent as MoonIcon } from "./Moon.svg";
 export { ReactComponent as RainIcon } from "./Rain.svg";

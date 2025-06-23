@@ -34,6 +34,7 @@ const SelectDropdown: React.FC<Props> = (props: Props) => {
               <SelectContent
                 countriesList={countriesList}
                 handleClearCountry={handleClearCountry}
+                handleCloseDropdown={handleClose}
                 handleCountrySelect={handleCountrySelect}
                 selectedCountry={selectedCountry}
                 searchInput={searchInput}

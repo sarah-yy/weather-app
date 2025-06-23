@@ -1,12 +1,11 @@
 import clsx from "clsx";
 import { ChangeEvent, FunctionComponent, Suspense, useMemo, useState } from "react";
-// import { HistoryIcon } from "../../../assets";
 import WeatherAppLogo from "../../../assets/graphics/WeatherAppLogo.png";
 import { ThemedText } from "../../../components";
 import { CountryInfo, Theme } from "../../../constants";
 import { useCountriesContext, useDebounce, useThemeContext, useWeatherContext } from "../../../hooks";
 
-import { SlideLayout, SelectDropdown } from "../components";
+import { SearchHistory, SlideLayout, SelectDropdown } from "../components";
 
 const FormSlide: FunctionComponent = () => {
   const { countryInfoMap } = useCountriesContext();
@@ -93,10 +92,6 @@ const FormSlide: FunctionComponent = () => {
             value={input}
             onChange={handleChangeInput}
           />
-          
-          {/* <IconButton className="w-10 h-10">
-            <HistoryIcon className="w-6 h-6" />
-          </IconButton> */}
         </div>
 
         <Suspense>
@@ -109,6 +104,10 @@ const FormSlide: FunctionComponent = () => {
             selectedCountry={selectedCountry}
             searchInput={input}
           />
+        </Suspense>
+
+        <Suspense>
+          <SearchHistory />
         </Suspense>
       </div>
     </SlideLayout>
