@@ -51,7 +51,7 @@ const WeatherForecastTable: FunctionComponent = () => {
               )}
               onClick={() => handleChangeFilter(filter)}
             >
-              <ThemedText component="span">
+              <ThemedText className="select-none" component="span">
                 {label}
               </ThemedText>
             </ContainedButton>

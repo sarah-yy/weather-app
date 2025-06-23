@@ -136,7 +136,7 @@ const SearchOption = memo((props: SearchOptionProps) => {
         <HistoryIcon className={clsx(`svg-fill--${theme}`, "w-4", "h-4")} />
       </div>
 
-      <ThemedText component="p" className="font-semibold select-none text-start">
+      <ThemedText component="p" className="font-semibold select-none text-start whitespace-nowrap text-ellipsis">
         {searchObj.city}, {searchObj.country}
       </ThemedText>
 
