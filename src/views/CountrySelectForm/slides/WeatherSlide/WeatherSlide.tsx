@@ -25,7 +25,7 @@ const WeatherSlide: FunctionComponent = () => {
     >
       <div className="max-w-[75rem] mx-auto my-0 w-full pb-[4rem]">
         <div>
-          <ContainedButton className="flex items-center bg-transparent! gap-2 pl-2 pr-3 py-1 back-btn" onClick={handleClearWeather}>
+          <ContainedButton className="flex items-center bg-transparent! gap-2 pl-2 pr-3 py-1 back-btn select-none" onClick={handleClearWeather}>
             <ChevronIcon className="w-4 h-4 back-icon" />
             <ThemedText component="span">
               Back

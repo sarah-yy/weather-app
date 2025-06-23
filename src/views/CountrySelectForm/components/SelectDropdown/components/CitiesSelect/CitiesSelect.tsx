@@ -7,12 +7,13 @@ import { useCountriesContext, useThemeContext, useWeatherContext } from "../../.
 
 interface Props {
   handleClearCountry: () => void;
+  handleCloseDropdown: () => void;
   selectedCountry?: string;
 }
 
 const CitiesSelect: React.FC<Props> = (props: Props) => {
-  const { handleClearCountry, selectedCountry } = props;
-  const { countryInfoMap } = useCountriesContext();
+  const { handleClearCountry, handleCloseDropdown, selectedCountry } = props;
+  const { countryInfoMap, handleAddToSearchHistory } = useCountriesContext();
   const { theme } = useThemeContext();
   const { handleSelectCity } = useWeatherContext();
   const parentRef = useRef<HTMLDivElement>(null);
@@ -39,6 +40,12 @@ const CitiesSelect: React.FC<Props> = (props: Props) => {
       city,
       countryName: countryInfo.name,
     });
+    handleAddToSearchHistory({
+      city,
+      country: countryInfo.name,
+    });
+    handleClearCountry();
+    handleCloseDropdown();
   };
 
   return (

@@ -82,5 +82,18 @@
 }
 
 .back-btn:hover::before {
-  transform: translateX(-0.5rem); 
+  transform: translateX(-0.5rem);
+}
+
+.delete-all-btn::before {
+  background-color: var(--color-red-500) !important;
+  opacity: 0.1 !important;
+}
+
+.delete-all-btn:hover::before {
+  transform: translateX(-0.375rem);
+}
+
+.search-history-btn:hover::before {
+  transform: translateX(0);
 }
