@@ -14,7 +14,14 @@ interface CountrySearch extends CountrySearchHistory {
 }
 
 const SearchHistory: FunctionComponent = () => {
-  const { countryInfoMap, searchHistoryData, searchHistoryOrder, handleAddToSearchHistory, handleRemoveFromSearchHistory } = useCountriesContext();
+  const {
+    countryInfoMap,
+    searchHistoryData,
+    searchHistoryOrder,
+    handleAddToSearchHistory,
+    handleRemoveAllSearchHistory,
+    handleRemoveFromSearchHistory,
+  } = useCountriesContext();
   const { theme } = useThemeContext();
   const { handleSelectCity } = useWeatherContext();
 
@@ -56,10 +63,25 @@ const SearchHistory: FunctionComponent = () => {
 
   return (
     <div className="max-w-[30rem] mx-auto my-0 w-full py-3">
-      <div>
+      <div className="flex justify-between">
         <ThemedText component="h3" className="text-lg font-semibold text-start">
           Search History
         </ThemedText>
+
+        <ContainedButton
+          className={clsx(
+            "delete-all-btn",
+            "flex",
+            "items-center",
+            "h-[1.5rem]",
+            "px-[0.375rem]",
+            "py-[0.125rem]",
+            "bg-transparent!",
+          )}
+          onClick={handleRemoveAllSearchHistory}
+        >
+          <span className={clsx("text-xs", "error-text")}>Delete All</span>
+        </ContainedButton>
       </div>
 
       <div

@@ -6,6 +6,7 @@ interface CountriesProps {
   countryInfoMap: CountryInfoMap;
   handleAddToSearchHistory: (cityCountry: CountrySearchHistory) => void;
   handleRemoveFromSearchHistory: (cityCountry: CountrySearchHistory) => void;
+  handleRemoveAllSearchHistory: () => void;
   searchHistoryData: SimpleMap<CountrySearchHistory>;
   searchHistoryOrder: string[];
 }
@@ -148,12 +149,20 @@ const CountriesProvider: FunctionComponent<PropsWithChildren> = (props: PropsWit
     });
   };
 
+  const handleRemoveAllSearchHistory = () => {
+    setSearchHistoryData({});
+    setLocalStorage(localStorageKeys.searchHistoryData, {});
+    setSearchHistoryOrder([]);
+    setLocalStorage(localStorageKeys.searchHistoryOrder, []);
+  };
+
   return (
     <CountriesContext.Provider
       value={{
         countryInfoMap,
         handleAddToSearchHistory,
         handleRemoveFromSearchHistory,
+        handleRemoveAllSearchHistory,
         searchHistoryData,
         searchHistoryOrder,
       }}
