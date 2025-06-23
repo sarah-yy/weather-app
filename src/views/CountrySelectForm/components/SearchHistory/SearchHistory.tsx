@@ -5,8 +5,6 @@ import { ContainedButton, ThemedText } from "../../../../components";
 import { CountrySearchHistory } from "../../../../constants";
 import { useCountriesContext, useThemeContext, useWeatherContext } from "../../../../hooks";
 
-const MAX_SEARCH_ENTRIES: number = 3;
-
 interface SearchObj extends CountrySearchHistory {
   itemKey: string;
 }
@@ -17,11 +15,12 @@ interface CountrySearch extends CountrySearchHistory {
 
 const SearchHistory: FunctionComponent = () => {
   const { countryInfoMap, searchHistoryData, searchHistoryOrder, handleAddToSearchHistory, handleRemoveFromSearchHistory } = useCountriesContext();
+  const { theme } = useThemeContext();
   const { handleSelectCity } = useWeatherContext();
 
   const searchObjArr = useMemo(() => {
-    return searchHistoryOrder.reduce((prev: SearchObj[], id: string, index: number): SearchObj[] => {
-      if (!searchHistoryData[id] || index >= MAX_SEARCH_ENTRIES) return prev;
+    return searchHistoryOrder.reduce((prev: SearchObj[], id: string): SearchObj[] => {
+      if (!searchHistoryData[id]) return prev;
       prev.push({
         ...searchHistoryData[id],
         itemKey: id,
@@ -57,11 +56,22 @@ const SearchHistory: FunctionComponent = () => {
 
   return (
     <div className="max-w-[30rem] mx-auto my-0 w-full py-3">
-      <ThemedText component="h3" className="text-lg font-semibold text-start">
-        Search History
-      </ThemedText>
+      <div>
+        <ThemedText component="h3" className="text-lg font-semibold text-start">
+          Search History
+        </ThemedText>
+      </div>
 
-      <div className="flex flex-col mt-2">
+      <div
+        className={clsx(
+          "flex",
+          "flex-col",
+          "mt-2",
+          "max-h-[9rem]",
+          "overflow-y-auto",
+          `div-scroll--${theme}`,
+        )}
+      >
         {searchObjArr.map((searchObj: SearchObj) => (
           <SearchOption
             handleRemove={handleRemove}
@@ -88,7 +98,8 @@ const SearchOption = memo((props: SearchOptionProps) => {
     <ContainedButton
       className={clsx(
         "w-full",
-        "h-[3rem]",
+        "min-h-[3rem]",
+        "max-h-[3rem]",
         "grid",
         "grid-cols-[1.75rem_auto_2rem]",
         "px-3",

@@ -307,6 +307,9 @@
   .max-h-\[3rem\] {
     max-height: 3rem;
   }
+  .max-h-\[9rem\] {
+    max-height: 9rem;
+  }
   .max-h-\[11rem\] {
     max-height: 11rem;
   }
@@ -441,6 +444,9 @@
   }
   .overflow-x-auto {
     overflow-x: auto;
+  }
+  .overflow-y-auto {
+    overflow-y: auto;
   }
   .overflow-y-scroll {
     overflow-y: scroll;
