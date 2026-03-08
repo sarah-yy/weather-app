@@ -49,9 +49,10 @@ jobs:
 
       - name: Deploy to AWS S3 bucket
         run: |
-          run: aws s3 sync ./dist/ s3://weather-app.click --delete
+          aws s3 sync ./dist/ s3://weather-app.click --delete
 
       - name: Clean up
         run: |
           rm -rf envs
         if: always()
+
