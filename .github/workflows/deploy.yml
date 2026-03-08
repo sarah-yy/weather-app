@@ -40,56 +40,18 @@ jobs:
       - name: Lint and Build Project
         run: yarn build
 
-      - name: Determine Deployment Environment and Variables
-        id: set-env
-        run: |
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
-            echo "AWS_HOST=${{ secrets.AWS_PROD_HOST }}" >> $GITHUB_ENV
-            echo "AWS_USER=${{ secrets.AWS_PROD_USER }}" >> $GITHUB_ENV
-            echo "AWS_SECURITY_GROUP_ID=${{ secrets.AWS_SECURITY_GROUP_ID }}" >> $GITHUB_ENV
-          else
-            echo "Invalid branch for deployment. Deployment ending now."
-            exit 0
-          fi
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
-      - name: Setup SSH Key
+      - name: Deploy to AWS S3 bucket
         run: |
-          echo "${{ secrets.OPENSSH_PEM }}" > private_key.pem
-          chmod 600 private_key.pem
-
-      - name: Get Github action IP
-        id: ip
-        uses: haythem/public-ip@v1.2
-
-      - name: Add IP address to security group
-        run: |
-          aws ec2 authorize-security-group-ingress --group-name $AWS_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
-
-      - name: Deploy to AWS
-        run: |
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
-            rsync -avz --delete \
-              -e "ssh -o StrictHostKeyChecking=no -i private_key.pem" \
-              --rsync-path="sudo rsync" \
-              dist/ $AWS_USER@$AWS_HOST:/usr/share/nginx/html/weather-app/
-          fi
-          rm -f private_key.pem
-
-      - name: Remove IP address from security group
-        run: |
-          aws ec2 revoke-security-group-ingress --group-name $AWS_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
-        if: always()
+          run: aws s3 sync ./dist/ s3://weather-app.click --delete
 
       - name: Clean up
         run: |
-          rm -f private_key.pem
           rm -rf envs
         if: always()
