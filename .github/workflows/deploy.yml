@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  build-and-deploy:
     env:
       AWS_DEFAULT_REGION: 'ap-southeast-1'
     runs-on: ubuntu-latest
@@ -37,8 +37,8 @@ jobs:
             exit 0
           fi
 
-      - name: Lint and Build Project
-        run: yarn build
+      - name: Lint and Build FE Project
+        run: yarn build:fe
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -49,7 +49,7 @@ jobs:
 
       - name: Deploy to AWS S3 bucket
         run: |
-          aws s3 sync ./dist/ s3://weather-app.click --delete
+          aws s3 sync ./apps/frontend/dist/ s3://weather-app.click --delete
 
       - name: Clean up
         run: |

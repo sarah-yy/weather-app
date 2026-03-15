@@ -1,0 +1,32 @@
+{
+  "name": "@weather-app/frontend",
+  "version": "1.0.0",
+  "description": "Hosts the frontend code for Weather App project",
+  "main": "index.js",
+  "author": "Thong Yuan Yu Sarah",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build-watch:component": "npx @tailwindcss/cli -i ./src/styles/input/component.input.css -o ./src/styles/component.css --watch",
+    "build-watch:custom": "npx @tailwindcss/cli -i ./src/styles/input/custom.input.css -o ./src/styles/custom.css --watch",
+    "build-watch:index": "npx @tailwindcss/cli -i ./src/styles/input/index.input.css -o ./src/styles/index.css --watch",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.8",
+    "@tanstack/react-virtual": "^3.13.8",
+    "clsx": "^2.1.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.8"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "vite": "^6.3.5",
+    "vite-plugin-svgr": "^4.3.0"
+  }
+}
