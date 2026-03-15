@@ -30,8 +30,19 @@ jobs:
 
       - name: Initialise env variables
         run: |
+          DIR="envs"
+          FILE_PATH="$DIR/.env"
+
+          if [ ! -d "$DIR" ]; then
+            mkdir -p "$DIR"
+          fi
+
+          if [ ! -e "$FILE_PATH" ]; then
+            touch "$FILE_PATH"
+          fi
+ 
           if [[ "${{ github.ref_name }}" == "main" ]]; then
-            echo "VITE_OPEN_WEATHER_API_KEY=${{ secrets.VITE_OPEN_WEATHER_API_KEY_PROD }}" >> envs/.env
+            echo "VITE_OPEN_WEATHER_API_KEY=${{ secrets.VITE_OPEN_WEATHER_API_KEY_PROD }}" >> "$FILE_PATH"
           else
             echo "Invalid branch for deployment. Deployment ending now."
             exit 0
